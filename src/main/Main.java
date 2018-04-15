@@ -11,9 +11,11 @@ import controller.ControlEscolar;
 import exceptions.CalificacionInvalidaException;
 import exceptions.FechaInvalidaException;
 import exceptions.NumeroControlRepetidoException;
+import gui.MainFrame;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,9 +23,17 @@ import java.util.logging.Logger;
  */
 public class Main {
     public static void main(String[] args) {
-        pichon();
+        //pichon();
+        grafico();
     }
-  
+    public static void grafico(){
+            SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainFrame ventana = new MainFrame("Control Escolar");
+            }
+        });
+    }
     public static void pichon(){
         
         ControlEscolar control = new ControlEscolar();
@@ -37,6 +47,8 @@ public class Main {
             System.out.println("2.-Menu modifcar alumno...");
             System.out.println("3.-Eliminar alumno");
             System.out.println("4.-Menú materias");
+            System.out.println("5.-Mostrar Lista de Alumnos");
+            System.out.println("6.-Mostrar Alumno");
             System.out.println("Ingresa tu seleccion: ");
             opcion = principalito.nextInt();
             switch(opcion){
@@ -134,6 +146,16 @@ public class Main {
                 case 3:
                     System.out.println("Ingresa el numero de control del alumno a eliminar: ");
                     control.eliminarAlumno(principalito.nextLine());
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    System.out.println("Ingresa numero de control: ");
+                    principalito.nextLine();
+                    String noControl  = principalito.nextLine();
+                    control.mostrarAlumno(noControl);
                     break;
                 default:
                     System.out.println("opcion incorrecta");
