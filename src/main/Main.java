@@ -31,6 +31,7 @@ public class Main {
             @Override
             public void run() {
                 MainFrame ventana = new MainFrame("Control Escolar");
+                
             }
         });
     }

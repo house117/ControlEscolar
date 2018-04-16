@@ -69,6 +69,14 @@ public class Fecha {
 			throw new FechaInvalidaException(String.format("El mes %d no tiene %d dias", mes, dia));
 		}
 	}
+        //RECORDAR AGREGAR EL VALIDADOR DE FECHA PARA LA LECTURA DE DATOS!!!!
+        /*private void validar() throws FechaInvalidaException {
+		if(dia < 1) {
+			throw new FechaInvalidaException("El dia debe ser mayor a 0");
+		}else if (dia > diasDelMes()) {
+			throw new FechaInvalidaException(String.format("El mes %d no tiene %d dias", mes, dia));
+		}
+	}*/
 	/*Método diasDelMes
 	 * Obtiene la cantidad de días en el mes en cuestión
 	 */

@@ -31,6 +31,9 @@ public class ControlEscolar {
         }
         getListaAlumnos().add(e);
     }
+    public Boolean existeNoControl(String noControl){
+        return buscarNoControl(noControl)==null;
+    }
     public Alumno buscarNoControl (String noControl){
         for(int i=0; i<getListaAlumnos().size(); i++){
             if(noControl.equals(getListaAlumnos().get(i).getNoControl())){

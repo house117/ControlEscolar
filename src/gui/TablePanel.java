@@ -63,4 +63,9 @@ public class TablePanel extends JPanel{
         
         super.add(scrollPane, BorderLayout.CENTER);
     }
+    //Hacer el drawTabla para cuando busque un alumno
+    /*
+    A ese le agregaremos 2 tablas, una con los datos del alumno
+    y una con los datos de sus respectivas materias
+    */
 }
