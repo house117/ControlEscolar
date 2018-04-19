@@ -22,13 +22,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TablePanel extends JPanel{
     private JScrollPane scrollPane;
-    private JTable studentsTable;
     public TablePanel(){
         super();
-        super.setLayout(new BorderLayout());
+        super.setLayout(null);
     }
     
     public void drawTabla(ArrayList<Alumno> aMostrar){
+        super.setLayout(new BorderLayout());
+        System.out.println("ME EJECUTE");
         //metodo que obtiene un arrayList de alumnos y lo agrega a una tabla y
         //agrega esta al JPanel
         String col[] = {"No.Control","Nombre","Ap.Paterno", "Ap.Materno", "Fecha Nac.", 
@@ -42,6 +43,14 @@ public class TablePanel extends JPanel{
         String carrera;
         String promedio;
         for(int i=0; i<aMostrar.size(); i++){    
+            System.out.println("ENTRE AL FOR veces: "+i);
+            System.out.println("Control = "+aMostrar.get(i).getNoControl());
+            System.out.println("Nombre = "+aMostrar.get(i).getNombre());
+            System.out.println("Apellido pat= "+ aMostrar.get(i).getaPaterno());
+            System.out.println("Apellido mat= "+aMostrar.get(i).getaMaterno());
+            System.out.println("fecha nac= "+aMostrar.get(i).getFechaNac().toString());
+            System.out.println("carrera= "+aMostrar.get(i).getCarrera());
+            System.out.println("promedio= "+aMostrar.get(i).getPromedio().toString());
                 noControl = aMostrar.get(i).getNoControl();
                 nombre = aMostrar.get(i).getNombre();
                 aPaterno = aMostrar.get(i).getaPaterno();
@@ -49,13 +58,14 @@ public class TablePanel extends JPanel{
                 fecha = aMostrar.get(i).getFechaNac().toString();
                 carrera = aMostrar.get(i).getCarrera();
                 promedio = aMostrar.get(i).getPromedio().toString();
-                Object[] data = {noControl, nombre, aPaterno,
+                String[] data = {noControl, nombre, aPaterno,
                     aMaterno, fecha, carrera, promedio};
                 tableModel.addRow(data);
+                
         }
         
         
-        studentsTable = new JTable(tableModel);
+        JTable studentsTable = new JTable(tableModel);
        
         scrollPane = new JScrollPane(studentsTable);
         //scrollPane.setPreferredSize(new Dimension(200, 400));

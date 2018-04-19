@@ -5,9 +5,13 @@
  */
 package gui;
 
+import controlescolar.objects.Alumno;
 import controlescolar.objects.Fecha;
 import controller.ControlEscolar;
 import controller.GestionadorArchivo;
+import exceptions.CalificacionInvalidaException;
+import exceptions.FechaInvalidaException;
+import exceptions.NumeroControlRepetidoException;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,8 +82,9 @@ public class MainFrame extends JFrame{
                     //cargar el archivo 
                     try {
                         control = GestionadorArchivo.abrirArchivo(fc.getSelectedFile());
-                        pnlTabla.removeAll();
+                        //pnlTabla.removeAll();
                         pnlTabla.drawTabla(control.getListaAlumnos());
+                        
                         MainFrame.this.repaint();
                     } catch (FileNotFoundException e) {
                         JOptionPane.showMessageDialog(MainFrame.this, "Archivo no encontrado", 
@@ -149,7 +154,7 @@ public class MainFrame extends JFrame{
                 String aPaterno;
                 String aMaterno;
                 Fecha fechaNac;
-                String Carrera;
+                String carrera;
                 Double promedio;
                 String noControl = JOptionPane.showInputDialog("Ingresa el numero de control");
                 
@@ -162,6 +167,9 @@ public class MainFrame extends JFrame{
                     JTextField diaField = new JTextField(5);
                     JTextField mesField = new JTextField(5);
                     JTextField anioField = new JTextField(5);
+
+                        
+                    
                     JPanel myPanel = new JPanel();
                     myPanel.add(new JLabel("Dia:"));
                     myPanel.add(diaField);
@@ -174,8 +182,31 @@ public class MainFrame extends JFrame{
                     int result = JOptionPane.showConfirmDialog(null, myPanel, "Ingresa la fecha de nacimiento",
                             JOptionPane.OK_CANCEL_OPTION);
                     if(result == JOptionPane.OK_OPTION){
-                        
+                        try {
+                            fechaNac = new Fecha(Integer.parseInt(diaField.getText()),
+                                    Integer.parseInt(mesField.getText()),
+                                    Integer.parseInt(anioField.getText()));
+                            carrera = JOptionPane.showInputDialog("Ingresa la carrera del alumno");
+                            promedio = Double.parseDouble(JOptionPane.showInputDialog("Ingresa el promedio del alumno"));
+                            try {
+                                Alumno aIngresar = new Alumno(noControl, nombre, aPaterno,
+                                        aMaterno, fechaNac, carrera, promedio);
+                                control.addAlumno(aIngresar);
+                                pnlTabla.removeAll();
+                                pnlTabla.drawTabla(control.getListaAlumnos());
+                                MainFrame.this.repaint();
+                            } catch (CalificacionInvalidaException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NumeroControlRepetidoException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (FechaInvalidaException ex) {
+                            ex.printStackTrace();
+                            
+                        }
                     }
+                     
+                    
                 }else{
                     JOptionPane.showMessageDialog(MainFrame.this, "Ya existe ese numero de control");
                 }
