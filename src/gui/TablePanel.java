@@ -22,19 +22,54 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TablePanel extends JPanel{
     private JScrollPane scrollPane;
-    public TablePanel(){
+    private JTable studentsTable;
+    DefaultTableModel tblmEstudiante;
+    public TablePanel(ArrayList<Alumno> listaAlumnos){
         super();
         super.setLayout(null);
+        String col[] = {"No.Control","Nombre","Ap.Paterno", "Ap.Materno", "Fecha Nac.", 
+                            "Carrera", "Promedio"};
+        tblmEstudiante = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int i, int i1){
+                return false;
+            }
+        };
+        drawTabla(listaAlumnos);
     }
-    
+    public void addAlumno(Alumno alumno){
+        String noControl;
+        String nombre;
+        String aPaterno;
+        String aMaterno;
+        String fecha;
+        String carrera;
+        String promedio;
+       
+            System.out.println("Control = "+alumno.getNoControl());
+            System.out.println("Nombre = "+alumno.getNombre());
+            System.out.println("Apellido pat= "+ alumno.getaPaterno());
+            System.out.println("Apellido mat= "+alumno.getaMaterno());
+            System.out.println("fecha nac= "+alumno.getFechaNac().toString());
+            System.out.println("carrera= "+alumno.getCarrera());
+            System.out.println("promedio= "+alumno.getPromedio().toString());
+                noControl = alumno.getNoControl();
+                nombre = alumno.getNombre();
+                aPaterno = alumno.getaPaterno();
+                aMaterno = alumno.getaMaterno();
+                fecha = alumno.getFechaNac().toString();
+                carrera = alumno.getCarrera();
+                promedio = alumno.getPromedio().toString();
+                Object[] data = {noControl, nombre, aPaterno,
+                    aMaterno, fecha, carrera, promedio};
+                tblmEstudiante.addRow(data);
+    }
     public void drawTabla(ArrayList<Alumno> aMostrar){
         super.setLayout(new BorderLayout());
         System.out.println("ME EJECUTE");
         //metodo que obtiene un arrayList de alumnos y lo agrega a una tabla y
         //agrega esta al JPanel
-        String col[] = {"No.Control","Nombre","Ap.Paterno", "Ap.Materno", "Fecha Nac.", 
-                            "Carrera", "Promedio"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        
         String noControl;
         String nombre;
         String aPaterno;
@@ -58,14 +93,16 @@ public class TablePanel extends JPanel{
                 fecha = aMostrar.get(i).getFechaNac().toString();
                 carrera = aMostrar.get(i).getCarrera();
                 promedio = aMostrar.get(i).getPromedio().toString();
-                String[] data = {noControl, nombre, aPaterno,
+                Object[] data = {noControl, nombre, aPaterno,
                     aMaterno, fecha, carrera, promedio};
-                tableModel.addRow(data);
+                tblmEstudiante.addRow(data);
                 
         }
         
         
-        JTable studentsTable = new JTable(tableModel);
+        studentsTable = new JTable(tblmEstudiante);
+        studentsTable.setRowSelectionAllowed(true);
+        
        
         scrollPane = new JScrollPane(studentsTable);
         //scrollPane.setPreferredSize(new Dimension(200, 400));

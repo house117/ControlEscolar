@@ -8,10 +8,13 @@ package main;
 import controlescolar.objects.Alumno;
 import controlescolar.objects.Fecha;
 import controller.ControlEscolar;
+import controller.GestionadorArchivo;
 import exceptions.CalificacionInvalidaException;
 import exceptions.FechaInvalidaException;
 import exceptions.NumeroControlRepetidoException;
 import gui.MainFrame;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +33,15 @@ public class Main {
             SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame ventana = new MainFrame("Control Escolar");
+                File controlEscolar = new File("control.ce");
+                try {
+                    
+                    MainFrame ventana = new MainFrame("Control Escolar", 
+                            GestionadorArchivo.abrirArchivo(controlEscolar));
+                } catch (IOException | ClassNotFoundException ex) {
+                    MainFrame ventana = new MainFrame("Control Escolar");
+                }
+                
                 
             }
         });

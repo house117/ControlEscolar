@@ -9,12 +9,13 @@ import controlescolar.objects.Alumno;
 import controlescolar.objects.Fecha;
 import java.util.ArrayList;
 import exceptions.*;
+import java.io.Serializable;
 
 /**
  *
  * @author House
  */
-public class ControlEscolar {
+public class ControlEscolar implements Serializable{
     private ArrayList<Alumno> listaAlumnos;
     public ControlEscolar(ArrayList<Alumno> listaAlumnos){
         this.listaAlumnos = listaAlumnos;

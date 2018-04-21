@@ -5,11 +5,13 @@
  */
 package controlescolar.objects;
 
+import java.io.Serializable;
+
 /**
  *
  * @author House
  */
-public class Materia {
+public class Materia implements Serializable{
     private Integer noControl;
     private String materia;
     private TipoCurso tipoCurso;

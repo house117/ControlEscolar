@@ -10,6 +10,7 @@ package controlescolar.objects;
  * @author House
  */
 import exceptions.FechaInvalidaException;
+import java.io.Serializable;
 
 //Tarea ver pelicula Mente Indomable
 //the good wild hunting
@@ -18,7 +19,7 @@ import exceptions.FechaInvalidaException;
 //TAREA HACER LA CLASE ALUMNO BIEN BIEN BIEN
 //ALUMNO DE LA SALLE, NOMBRE, FECHA NAC, CALCULAR LA EDAD CON LA FECHA ACTUAL 
 //CARRERA, AÑO QUE ENTRASTE, CORREO ELECTRONICO, TWITTER FACEBOOK
-public class Fecha {
+public class Fecha implements Serializable{
 	private Integer mes;  //Variable de instancia de numero de días.
 	private Integer dia;  //Variable atributo que indica el mes
 	private Integer anio; //Variable atributo que indica el año

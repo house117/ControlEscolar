@@ -54,14 +54,26 @@ public class MainFrame extends JFrame{
         super.setLocationRelativeTo(null);
         control = new ControlEscolar();
         
-        
-        ControlEscolar control = new ControlEscolar();
         pnlControl = new ControlPanel();
-        pnlTabla = new TablePanel();
-        pnlTabla.drawTabla(control.getListaAlumnos());
+        pnlTabla = new TablePanel(control.getListaAlumnos());
+        super.add(pnlControl, BorderLayout.NORTH);
+        super.add(pnlTabla, BorderLayout.CENTER);
+        super.setVisible(true);
+    }
+    public MainFrame(String title, ControlEscolar archivoPrincipal){
+        super(title);
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.setSize(800, 600);
+        super.setLayout(new BorderLayout());
+        super.setJMenuBar(createMenu());
+        //super.setJMenuBar(createMenu());
+        super.setLocationRelativeTo(null);
+        control = archivoPrincipal;
         
         
         
+        pnlControl = new ControlPanel();
+        pnlTabla = new TablePanel(control.getListaAlumnos());
         super.add(pnlControl, BorderLayout.NORTH);
         super.add(pnlTabla, BorderLayout.CENTER);
         super.setVisible(true);
@@ -192,8 +204,7 @@ public class MainFrame extends JFrame{
                                 Alumno aIngresar = new Alumno(noControl, nombre, aPaterno,
                                         aMaterno, fechaNac, carrera, promedio);
                                 control.addAlumno(aIngresar);
-                                pnlTabla.removeAll();
-                                pnlTabla.drawTabla(control.getListaAlumnos());
+                                pnlTabla.addAlumno(aIngresar);
                                 MainFrame.this.repaint();
                             } catch (CalificacionInvalidaException ex) {
                                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);

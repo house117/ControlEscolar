@@ -7,13 +7,14 @@ package controlescolar.objects;
 
 import exceptions.CalificacionInvalidaException;
 import exceptions.FechaInvalidaException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author House
  */
-public class Alumno {
+public class Alumno implements Serializable{
     private String noControl; 
     private String nombre;
     private String aPaterno;
