@@ -5,7 +5,7 @@
  */
 package controller;
 
-import Encriptador.Encriptador;
+import Encriptador.EncriptadorDeArchivos;
 import Encriptador.GestionadorArchivoEncriptado;
 import Encriptador.ObjetoEncriptado;
 import java.io.File;
@@ -26,7 +26,7 @@ public class GestionadorArchivo {
         FileOutputStream output = new FileOutputStream(file);
         ObjectOutputStream writer = new ObjectOutputStream(output);
         writer.writeObject(b);
-        ObjetoEncriptado aGuardar = Encriptador.encriptaArchivo(file);
+        ObjetoEncriptado aGuardar = EncriptadorDeArchivos.encriptaArchivo(file);
         writer.close();
         output.close();
         File cryptedFile = new File(Name);
@@ -39,7 +39,7 @@ public class GestionadorArchivo {
         public static ControlEscolar abrirArchivo(File selected) throws FileNotFoundException, IOException, ClassNotFoundException{
         //File file = new File("miArchivo.txt");
         File file = selected;
-        byte[] arregloDesencriptado = Encriptador.desencriptarArchivo(file);
+        byte[] arregloDesencriptado = EncriptadorDeArchivos.desencriptarArchivo(file);
         File Temporal = GestionadorArchivoEncriptado.crearArchivito(arregloDesencriptado, "morirexd.morire");
         FileInputStream input = new FileInputStream(Temporal);
         ObjectInputStream reader = new ObjectInputStream(input);

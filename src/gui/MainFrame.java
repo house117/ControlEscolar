@@ -119,9 +119,17 @@ public class MainFrame extends JFrame{
                    System.out.println(fc.getSelectedFile());
                    File f = new File(fc.getSelectedFile().toString());
                    if(f.exists()){
-                       JOptionPane.showMessageDialog(MainFrame.this, "Ese archivo ya existe",
-                               "Cuidado...",
-                               JOptionPane.WARNING_MESSAGE);
+                       int result = JOptionPane.showConfirmDialog(null, 
+                               "Ese archivo ya existe, ¿desea sobrescribirlo?", 
+                               "Archivo Existente",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                       if(result == JOptionPane.OK_OPTION){
+                           try {
+                                GestionadorArchivo.guardarArchivito(control, fc.getSelectedFile().toString());
+                               } catch (IOException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                             }
+                       }
                    }else{
                       try {
                           GestionadorArchivo.guardarArchivito(control, fc.getSelectedFile().toString());
