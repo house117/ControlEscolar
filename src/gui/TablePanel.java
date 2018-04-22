@@ -7,7 +7,6 @@ package gui;
 
 import controlescolar.objects.Alumno;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import javax.swing.Box;
