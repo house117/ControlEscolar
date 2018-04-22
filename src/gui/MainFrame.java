@@ -5,16 +5,9 @@
  */
 package gui;
 
-import controlescolar.objects.Alumno;
-import controlescolar.objects.Fecha;
-import controlescolar.objects.Materia;
-import controlescolar.objects.Profesor;
-import controlescolar.objects.TipoCurso;
-import controller.ControlEscolar;
-import controller.GestionadorArchivo;
-import exceptions.CalificacionInvalidaException;
-import exceptions.FechaInvalidaException;
-import exceptions.NumeroControlRepetidoException;
+import controlescolar.objects.*;
+import controller.*;
+import exceptions.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,21 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
+import javax.swing.*;
+
 
 /**
  *
