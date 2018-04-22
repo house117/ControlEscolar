@@ -7,6 +7,8 @@ package controller;
 
 import controlescolar.objects.Alumno;
 import controlescolar.objects.Fecha;
+import controlescolar.objects.Materia;
+import controlescolar.objects.Profesor;
 import java.util.ArrayList;
 import exceptions.*;
 import java.io.Serializable;
@@ -17,11 +19,18 @@ import java.io.Serializable;
  */
 public class ControlEscolar implements Serializable{
     private ArrayList<Alumno> listaAlumnos;
-    public ControlEscolar(ArrayList<Alumno> listaAlumnos){
+    private ArrayList<Profesor> listaProfesores;
+    private ArrayList<Materia> listaMaterias;
+    public ControlEscolar(ArrayList<Alumno> listaAlumnos, ArrayList<Materia> listaMaterias, 
+            ArrayList<Profesor> listaProfesores){
         this.listaAlumnos = listaAlumnos;
+        this.listaProfesores = listaProfesores;
+        this.listaMaterias = listaMaterias;
     }
     public ControlEscolar(){
         listaAlumnos = new ArrayList<>();
+        listaProfesores = new ArrayList<>();
+        listaMaterias = new ArrayList<>();
     }
     public void addAlumno(Alumno e) throws NumeroControlRepetidoException{
         for(int i=0; i<getListaAlumnos().size(); i++){
@@ -32,16 +41,51 @@ public class ControlEscolar implements Serializable{
         }
         getListaAlumnos().add(e);
     }
-    public Boolean existeNoControl(String noControl){
+    public void addProfesor(Profesor e) throws NumeroControlRepetidoException{
+        for(int i=0; i<getListaProfesores().size(); i++){
+            System.out.println(e.getNoControl()+" | "+getListaProfesores().get(i).getNoControl());
+            if(e.getNoControl().equals(getListaProfesores().get(i).getNoControl())){
+                throw new NumeroControlRepetidoException("Numero de control repetido");
+            }
+        }
+        getListaProfesores().add(e);
+    }
+    public void addMateria(Materia e) throws NumeroControlRepetidoException{
+        for(int i=0; i<getListaMaterias().size(); i++){
+            System.out.println(e.getNoControl()+" | "+getListaMaterias().get(i).getNoControl());
+            if(e.getNoControl().equals(getListaMaterias().get(i).getNoControl())){
+                throw new NumeroControlRepetidoException("Numero de control repetido");
+            }
+        }
+        getListaMaterias().add(e);
+    }
+
+    
+    public Boolean existeNoControlAlumno(String noControl){
         for(int i=0; i<getListaAlumnos().size(); i++){
             if(noControl.equals(getListaAlumnos().get(i).getNoControl())){
                 return true;
             }
         }
         return false;
-        
-        
     }
+    public Boolean existeNoControlProfesor(String noControl){
+        for(int i=0; i<getListaProfesores().size(); i++){
+            if(noControl.equals(getListaProfesores().get(i).getNoControl())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Boolean existeNoControlMateria(String noControl){
+        for(int i=0; i<getListaMaterias().size(); i++){
+            if(noControl.equals(getListaMaterias().get(i).getNoControl())){
+                return true;
+            }
+        }
+        return false;
+    }
+        
     public Alumno buscarNoControl (String noControl){
         for(int i=0; i<getListaAlumnos().size(); i++){
             if(noControl.equals(getListaAlumnos().get(i).getNoControl())){
@@ -103,6 +147,22 @@ public class ControlEscolar implements Serializable{
      */
     public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
+    }
+
+    public ArrayList<Profesor> getListaProfesores() {
+        return listaProfesores;
+    }
+
+    public void setListaProfesores(ArrayList<Profesor> listaProfesores) {
+        this.listaProfesores = listaProfesores;
+    }
+
+    public ArrayList<Materia> getListaMaterias() {
+        return listaMaterias;
+    }
+
+    public void setListaMaterias(ArrayList<Materia> listaMaterias) {
+        this.listaMaterias = listaMaterias;
     }
     
 

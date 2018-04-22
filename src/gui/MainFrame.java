@@ -7,6 +7,9 @@ package gui;
 
 import controlescolar.objects.Alumno;
 import controlescolar.objects.Fecha;
+import controlescolar.objects.Materia;
+import controlescolar.objects.Profesor;
+import controlescolar.objects.TipoCurso;
 import controller.ControlEscolar;
 import controller.GestionadorArchivo;
 import exceptions.CalificacionInvalidaException;
@@ -21,6 +24,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -176,7 +181,7 @@ public class MainFrame extends JFrame{
                 Double promedio;
                 String noControl = JOptionPane.showInputDialog("Ingresa el numero de control");
                 /*Pendiente agregar también la lista de Materias, y con ellas calcular el promedio*/
-                if(!control.existeNoControl(noControl)){
+                if(!control.existeNoControlAlumno(noControl)){
                     nombre = JOptionPane.showInputDialog("Ingresa el nombre del alumno");
                     aPaterno = JOptionPane.showInputDialog("Ingresa el apellido paterno del alumno");
                     aMaterno = JOptionPane.showInputDialog("Ingresa el apellido materno del alumno");
@@ -239,12 +244,131 @@ public class MainFrame extends JFrame{
                 }
             }
         });
-        
         mmAlumnos.add(nnAgregarAlumno);
+        
+        JMenu mmProfesores = new JMenu("Profesores");
+        JMenuItem nnAgregarProfesor = new JMenuItem("Agregar profesor...");
+        nnAgregarProfesor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String nombre;
+                String aPaterno;
+                String aMaterno;
+                Fecha fechaNac;
+                String noControl = JOptionPane.showInputDialog("Ingresa el numero de control");
+                /*Pendiente agregar también la lista de Materias, y con ellas calcular el promedio*/
+                if(!control.existeNoControlProfesor(noControl)){
+                    nombre = JOptionPane.showInputDialog("Ingresa el nombre del profesor");
+                    aPaterno = JOptionPane.showInputDialog("Ingresa el apellido paterno del profesor");
+                    aMaterno = JOptionPane.showInputDialog("Ingresa el apellido materno del profesor");
+                    //Para introducir fecha más comodamente
+                    
+                    JTextField diaField = new JTextField(5);
+                    JTextField mesField = new JTextField(5);
+                    JTextField anioField = new JTextField(5);
+
+                        
+                    /*Para fecha utilizamos una opción múltiple, si bien podemos utilizarla para toda
+                    la inserción de datos, por ahora sólo utilizamos con fecha porque me da flojera jajaja
+                    */
+                    JPanel myPanel = new JPanel(); //Creamos un panel, esto para poder agregar los 
+                                                       //JTextFields, y los Labels para recibir la información
+                    myPanel.add(new JLabel("Dia:"));
+                    myPanel.add(diaField);
+                    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+                    myPanel.add(new JLabel("Mes:"));
+                    myPanel.add(mesField);
+                    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+                    myPanel.add(new JLabel("Año:"));
+                    myPanel.add(anioField);
+                    int result = JOptionPane.showConfirmDialog(null, myPanel, "Ingresa la fecha de nacimiento",
+                            JOptionPane.OK_CANCEL_OPTION); //Con esto tenemos un boton de ok/cancel, muy util
+                    if(result == JOptionPane.OK_OPTION){ //Si la opcion es OK, procedemos
+                        try {
+                            fechaNac = new Fecha(Integer.parseInt(diaField.getText()),
+                                    Integer.parseInt(mesField.getText()),
+                                    Integer.parseInt(anioField.getText()));
+                            try {
+                                /*
+                                Sólo hasta el final después de corroborar la información, procedemos a
+                                agregar al nuevo alumno con los datos obtenidos
+                                lo agregamos al control, y a la tabla, 
+                                        */
+                                Profesor aIngresar = new Profesor(noControl, nombre, aPaterno,
+                                        aMaterno, fechaNac);
+                                control.addProfesor(aIngresar);
+                            } catch (CalificacionInvalidaException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NumeroControlRepetidoException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (FechaInvalidaException ex) {
+                            ex.printStackTrace();
+                            
+                        }
+                    }
+                     
+                    
+                }else{
+                    JOptionPane.showMessageDialog(MainFrame.this, "Ya existe ese numero de control");
+                }
+            }
+        });
+        mmProfesores.add(nnAgregarProfesor);
+        
+        JMenu mmMaterias = new JMenu("Materias");
+        JMenuItem nnAgregarMateria = new JMenuItem("Agregar materia...");
+        nnAgregarMateria.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                /*
+                    private Integer noControl;
+                    private String materia;
+                    private TipoCurso tipoCurso;
+                    private Double calificacion;
+                
+                */
+                JPanel myPanel = new JPanel(); //Creamos un panel, esto para poder agregar los 
+                                                       //JTextFields, y los Labels para recibir la información
+                    myPanel.setLayout(new BoxLayout(myPanel, WIDTH));
+                    JTextField noControlField = new JTextField(5);
+                    JTextField nombreField = new JTextField(5);
+                    JComboBox tipoCursoBox = new JComboBox(TipoCurso.values());
+                    myPanel.add(new JLabel("NoControl:"));
+                    myPanel.add(noControlField);
+                    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+                    myPanel.add(new JLabel("Nombre:"));
+                    myPanel.add(nombreField);
+                    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+                    myPanel.add(new JLabel("Tipo Curso:"));
+                    myPanel.add(tipoCursoBox);
+                    int result = JOptionPane.showConfirmDialog(null, myPanel, "Ingresa la fecha de nacimiento",
+                            JOptionPane.OK_CANCEL_OPTION); //Con esto tenemos un boton de ok/cancel, muy util
+                    if(result == JOptionPane.OK_OPTION){
+                        if(!control.existeNoControlMateria(noControlField.getText())){
+                            
+                            Materia nuevaMateria = new Materia(noControlField.getText(), 
+                                    nombreField.getText(), (TipoCurso)tipoCursoBox.getSelectedItem());
+                            try {
+                                control.addMateria(nuevaMateria);
+                            } catch (NumeroControlRepetidoException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(MainFrame.this, "Ya existe ese numero de control");
+                        }
+                            
+                    }
+                
+            }
+        });
+        mmMaterias.add(nnAgregarMateria);
         
         
         menu.add(mmArchivo);
         menu.add(mmAlumnos);
+        menu.add(mmProfesores);
+        menu.add(mmMaterias);
         return menu;
     }
     

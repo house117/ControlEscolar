@@ -12,12 +12,18 @@ import java.io.Serializable;
  * @author House
  */
 public class Materia implements Serializable{
-    private Integer noControl;
+    private String noControl;
     private String materia;
     private TipoCurso tipoCurso;
     private Double calificacion;
 
-    public Materia(Integer noControl, String materia, TipoCurso tipoCurso, Double calificacion) {
+    public Materia(String noControl, String materia, TipoCurso tipoCurso, Double calificacion) {
+        this.noControl = noControl;
+        this.materia = materia;
+        this.tipoCurso = tipoCurso;
+        this.calificacion = calificacion;
+    }
+        public Materia(String noControl, String materia, TipoCurso tipoCurso) {
         this.noControl = noControl;
         this.materia = materia;
         this.tipoCurso = tipoCurso;
@@ -27,11 +33,11 @@ public class Materia implements Serializable{
     public Materia() {
     }
 
-    public Integer getNoControl() {
+    public String getNoControl() {
         return noControl;
     }
 
-    public void setNoControl(Integer noControl) {
+    public void setNoControl(String noControl) {
         this.noControl = noControl;
     }
 

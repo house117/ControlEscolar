@@ -14,50 +14,22 @@ import java.util.ArrayList;
  *
  * @author House
  */
-public class Alumno implements Serializable{
+public class Profesor implements Serializable{
     private String noControl; 
     private String nombre;
     private String aPaterno;
     private String aMaterno;
     private Fecha fechaNac;
-    private String Carrera;
-    private Double promedio;
-    private ArrayList<Materia> materiasDelAlumno;
-    public Alumno(String noControl, String nombre, String aPaterno,
-            String aMaterno, Fecha fechaNac, String Carrera, Double promedio) //Quitar el promedio y reciba la lista materias
+    private ArrayList<Materia> materiasDelProfesor;
+    public Profesor(String noControl, String nombre, String aPaterno,
+            String aMaterno, Fecha fechaNac) 
             throws FechaInvalidaException, CalificacionInvalidaException {
         this.noControl = noControl;
         this.nombre = nombre;
         this.aPaterno = aPaterno;
         this.aMaterno = aMaterno;
         this.fechaNac = new Fecha(fechaNac.getDia(), fechaNac.getMes(), fechaNac.getAnio());
-        this.Carrera = Carrera;
-        if(promedio < 0 || promedio >10){
-            throw new CalificacionInvalidaException("Promedio no esta entre 1 y 10");
-        }else{
-            this.promedio = promedio;
-        }
     }
-    public Alumno(String noControl, String nombre, String aPaterno,
-            String aMaterno, Fecha fechaNac, String Carrera, Double promedio,
-            ArrayList<Materia> materias) throws FechaInvalidaException, CalificacionInvalidaException {
-        this.noControl = noControl;
-        this.nombre = nombre;
-        this.aPaterno = aPaterno;
-        this.aMaterno = aMaterno;
-        this.fechaNac = new Fecha(fechaNac.getDia(), fechaNac.getMes(), fechaNac.getAnio());
-        this.Carrera = Carrera;
-        if(promedio < 0 || promedio >10){
-            throw new CalificacionInvalidaException("Promedio no esta entre 1 y 10");
-        }else{
-            this.promedio = promedio;
-        }
-        this.materiasDelAlumno = materias;
-    }
-
-    public Alumno() {
-    }
-
     public String getNoControl() {
         return noControl;
     }
@@ -98,21 +70,20 @@ public class Alumno implements Serializable{
         this.fechaNac = fechaNac;
     }
 
-    public String getCarrera() {
-        return Carrera;
+    public ArrayList<Materia> getMateriasDelAlumno() {
+        return materiasDelAlumno;
     }
 
-    public void setCarrera(String Carrera) {
-        this.Carrera = Carrera;
+    public void setMateriasDelAlumno(ArrayList<Materia> materiasDelAlumno) {
+        this.materiasDelAlumno = materiasDelAlumno;
+    }
+    private ArrayList<Materia> materiasDelAlumno;
+
+    public ArrayList<Materia> getMateriasDelProfesor() {
+        return materiasDelProfesor;
     }
 
-    public Double getPromedio() {
-        return promedio;
+    public void setMateriasDelProfesor(ArrayList<Materia> materiasDelProfesor) {
+        this.materiasDelProfesor = materiasDelProfesor;
     }
-
-    public void setPromedio(Double promedio) {
-        this.promedio = promedio;
-    }
-    
-    
 }
