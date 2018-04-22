@@ -7,10 +7,18 @@ package gui;
 
 import controlescolar.objects.Alumno;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +32,7 @@ public class TablePanel extends JPanel{
     */
     private JScrollPane scrollPane;
     private JTable studentsTable;
-    DefaultTableModel tblmEstudiante;
+    private DefaultTableModel tblmEstudiante;
     //Despliega la lista completa que recibe
     public TablePanel(ArrayList<Alumno> listaAlumnos){
         super();
@@ -44,6 +52,57 @@ public class TablePanel extends JPanel{
             */
         };
         drawTabla(listaAlumnos);
+        
+        studentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if(!lse.getValueIsAdjusting()){
+                  JPanel mostrarAlumno = new JPanel();
+                String noControl = studentsTable.getValueAt(studentsTable.getSelectedRow(), 0).toString();
+                System.out.println("clicked: "+studentsTable.getValueAt(studentsTable.getSelectedRow(), 0).toString());
+                for(int i=0; i<listaAlumnos.size(); i++){
+                    //System.out.println("me ejecute xd");
+                    if(noControl.equals(listaAlumnos.get(i).getNoControl())){
+                       // System.out.println("FUI ECUAL XD");
+                        
+                        mostrarAlumno.setLayout(new BoxLayout(mostrarAlumno, WIDTH));
+                        mostrarAlumno.add(new JLabel("No control: "+listaAlumnos.get(i).getNoControl()));
+                        mostrarAlumno.add(Box.createHorizontalStrut(15)); 
+                        mostrarAlumno.add(new JLabel("Nombre: "+listaAlumnos.get(i).getNombre()));
+                        mostrarAlumno.add(Box.createHorizontalStrut(15)); 
+                        mostrarAlumno.add(new JLabel("Apellido paterno: "+listaAlumnos.get(i).getaPaterno()));
+                        mostrarAlumno.add(Box.createHorizontalStrut(15)); 
+                        mostrarAlumno.add(new JLabel("Apellido materno: "+listaAlumnos.get(i).getaMaterno()));
+                        mostrarAlumno.add(Box.createHorizontalStrut(15)); 
+                        mostrarAlumno.add(new JLabel("Fecha de nacimiento: "+listaAlumnos.get(i).getFechaNac().toString()));
+                        mostrarAlumno.add(Box.createHorizontalStrut(15)); 
+                        mostrarAlumno.add(new JLabel("Carrera: "+listaAlumnos.get(i).getCarrera()));
+                        mostrarAlumno.add(Box.createVerticalStrut(15)); 
+                        
+                         mostrarAlumno.add(new JLabel(String.format("Promedio general: %.2f", listaAlumnos.get(i).getPromedio())));
+                        mostrarAlumno.add(Box.createVerticalStrut(15)); 
+                        
+                        for(int j=0; j<listaAlumnos.get(i).getMateriasDelAlumno().size(); j++){
+                            mostrarAlumno.add(new JLabel(String.format("Materia %d: %s", j, 
+                                    listaAlumnos.get(i).getMateriasDelAlumno().get(j).getMateria())));
+                            mostrarAlumno.add(new JLabel(String.format("Calificación %s: %s",
+                                    listaAlumnos.get(i).getMateriasDelAlumno().get(j).getMateria(), 
+                                    listaAlumnos.get(i).getMateriasDelAlumno().get(j).getCalificacion().toString())));
+                            mostrarAlumno.add(new JLabel(String.format("Tipo curso: %s",
+                                    listaAlumnos.get(i).getMateriasDelAlumno().get(j).getTipoCurso())));
+                            mostrarAlumno.add(Box.createVerticalStrut(15));
+                        }
+                        int result = JOptionPane.showConfirmDialog(null, mostrarAlumno, "Información del alumno",
+                            JOptionPane.CLOSED_OPTION); 
+                        //TablePanel.this.repaint();
+                    }
+                }
+                  
+                }
+                
+                        
+            }
+        });
     }
     //Método para agregar un alumno más a la lista.
     public void addAlumno(Alumno alumno){
@@ -69,7 +128,7 @@ public class TablePanel extends JPanel{
                 aMaterno = alumno.getaMaterno();
                 fecha = alumno.getFechaNac().toString();
                 carrera = alumno.getCarrera();
-                promedio = alumno.getPromedio().toString();
+                promedio = String.format("%.2f", alumno.getPromedio());
                 Object[] data = {noControl, nombre, aPaterno,
                     aMaterno, fecha, carrera, promedio};
                 tblmEstudiante.addRow(data);
@@ -105,7 +164,7 @@ public class TablePanel extends JPanel{
                 aMaterno = aMostrar.get(i).getaMaterno();
                 fecha = aMostrar.get(i).getFechaNac().toString();
                 carrera = aMostrar.get(i).getCarrera();
-                promedio = aMostrar.get(i).getPromedio().toString();
+                promedio = String.format("%.2f", aMostrar.get(i).getPromedio());
                 Object[] data = {noControl, nombre, aPaterno,
                     aMaterno, fecha, carrera, promedio};
                 tblmEstudiante.addRow(data);
@@ -117,16 +176,42 @@ public class TablePanel extends JPanel{
         studentsTable = new JTable(tblmEstudiante);
         studentsTable.setRowSelectionAllowed(true);
         //el setRow no es necesario pero meh
+        
        
         scrollPane = new JScrollPane(studentsTable);
         //scrollPane.setPreferredSize(new Dimension(200, 400));
         studentsTable.setFillsViewportHeight(true);
         
         super.add(scrollPane, BorderLayout.CENTER);
+        
     }
     //Hacer el drawTabla para cuando busque un alumno
     /*
     A ese le agregaremos 2 tablas, una con los datos del alumno
     y una con los datos de sus respectivas materias
     */
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    public void setScrollPane(JScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+    }
+
+    public JTable getStudentsTable() {
+        return studentsTable;
+    }
+
+    public void setStudentsTable(JTable studentsTable) {
+        this.studentsTable = studentsTable;
+    }
+
+    public DefaultTableModel getTblmEstudiante() {
+        return tblmEstudiante;
+    }
+
+    public void setTblmEstudiante(DefaultTableModel tblmEstudiante) {
+        this.tblmEstudiante = tblmEstudiante;
+    }
 }

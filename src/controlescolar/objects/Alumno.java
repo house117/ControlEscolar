@@ -22,9 +22,11 @@ public class Alumno implements Serializable{
     private Fecha fechaNac;
     private String Carrera;
     private Double promedio;
+    private String password;
     private ArrayList<Materia> materiasDelAlumno;
     public Alumno(String noControl, String nombre, String aPaterno,
-            String aMaterno, Fecha fechaNac, String Carrera, Double promedio) //Quitar el promedio y reciba la lista materias
+            String aMaterno, Fecha fechaNac, String Carrera, ArrayList<Materia> materiasDelAlumno,
+            String password) //Quitar el promedio y reciba la lista materias
             throws FechaInvalidaException, CalificacionInvalidaException {
         this.noControl = noControl;
         this.nombre = nombre;
@@ -32,11 +34,16 @@ public class Alumno implements Serializable{
         this.aMaterno = aMaterno;
         this.fechaNac = new Fecha(fechaNac.getDia(), fechaNac.getMes(), fechaNac.getAnio());
         this.Carrera = Carrera;
-        if(promedio < 0 || promedio >10){
-            throw new CalificacionInvalidaException("Promedio no esta entre 1 y 10");
-        }else{
-            this.promedio = promedio;
+        this.materiasDelAlumno = materiasDelAlumno;
+        promedio = calcularPromedio();
+    }
+    public Double calcularPromedio(){
+        Double suma = 0.0;
+        for(int i=0; i<materiasDelAlumno.size(); i++){
+            suma += materiasDelAlumno.get(i).getCalificacion();
         }
+        suma /= materiasDelAlumno.size();
+        return suma;
     }
     public Alumno(String noControl, String nombre, String aPaterno,
             String aMaterno, Fecha fechaNac, String Carrera, Double promedio,
@@ -112,6 +119,22 @@ public class Alumno implements Serializable{
 
     public void setPromedio(Double promedio) {
         this.promedio = promedio;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ArrayList<Materia> getMateriasDelAlumno() {
+        return materiasDelAlumno;
+    }
+
+    public void setMateriasDelAlumno(ArrayList<Materia> materiasDelAlumno) {
+        this.materiasDelAlumno = materiasDelAlumno;
     }
     
     

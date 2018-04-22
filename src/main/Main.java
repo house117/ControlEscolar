@@ -5,19 +5,10 @@
  */
 package main;
 
-import controlescolar.objects.Alumno;
-import controlescolar.objects.Fecha;
-import controller.ControlEscolar;
 import controller.GestionadorArchivo;
-import exceptions.CalificacionInvalidaException;
-import exceptions.FechaInvalidaException;
-import exceptions.NumeroControlRepetidoException;
 import gui.MainFrame;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -48,11 +39,9 @@ public class Main {
     }
     public static void pichon(){
         
-        ControlEscolar control = new ControlEscolar();
+    /*    ControlEscolar control = new ControlEscolar();
         Scanner principalito = new Scanner(System.in);
         Integer opcion;
-        
-        
         do{
             System.out.println("Menú");
             System.out.println("1.-Agregar alumno");
@@ -72,7 +61,7 @@ public class Main {
                          private String aMaterno;
                          private Fecha fechaNac;
                             private String Carrera;
-                            private Double promedio;*/
+                            private Double promedio;
                     
                     try {
                         System.out.println("Ingresa numero de control: ");
@@ -173,6 +162,6 @@ public class Main {
                     System.out.println("opcion incorrecta");
                     break;
             }
-        }while(opcion != 7);
+        }while(opcion != 7);*/
     }
 }

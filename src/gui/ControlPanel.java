@@ -8,9 +8,12 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import listeners.ControlListener;
 
 /**
  *
@@ -21,7 +24,7 @@ public class ControlPanel extends JPanel{
     private JButton btnBusquedaPorControl;
     private JTextField txtBusquedaNombre;
     private JTextField txtBusquedaControl;
-    
+    private ControlListener listener;
     public ControlPanel(){
         super();
         super.setBackground(Color.RED);
@@ -34,22 +37,38 @@ public class ControlPanel extends JPanel{
         JPanel pnlBotonNombre = new JPanel();
         pnlBotonNombre.setLayout(new BorderLayout());
         
-        /*BOTONES*/
-        btnBusquedaPorNombre = new JButton();
-        btnBusquedaPorNombre.setText("Buscar por nombre");
-        btnBusquedaPorNombre.setPreferredSize(new Dimension(170, 30));
-        
-        
-        btnBusquedaPorControl = new JButton();
-        btnBusquedaPorControl.setText("Buscar por no. control");
-        btnBusquedaPorControl.setPreferredSize(new Dimension(170, 30));
-        
         /*TEXT FIELDS*/
         txtBusquedaControl = new JTextField("No. control");
         txtBusquedaControl.setPreferredSize(new Dimension(600, 10));
         
         txtBusquedaNombre = new JTextField("Nombre...");
         txtBusquedaNombre.setPreferredSize(new Dimension(600,10));
+        
+        
+        /*BOTONES*/
+        btnBusquedaPorNombre = new JButton();
+        btnBusquedaPorNombre.setText("Filtrar por nombre");
+        btnBusquedaPorNombre.setPreferredSize(new Dimension(170, 30));
+        btnBusquedaPorNombre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                getListener().btnBusquedaNombreOnClick(txtBusquedaNombre);
+                
+            }
+        });
+        
+        
+        btnBusquedaPorControl = new JButton();
+        btnBusquedaPorControl.setText("Filtrar por no. control");
+        btnBusquedaPorControl.setPreferredSize(new Dimension(170, 30));
+        btnBusquedaPorControl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                getListener().btnBusquedaControlOnClick(txtBusquedaControl);
+            }
+        });
+        
+
         /*
         txtMinas = new JTextField("10");
         txtMinas.setPreferredSize(new Dimension(60, 30));
@@ -77,5 +96,13 @@ public class ControlPanel extends JPanel{
         
         
         
+    }
+
+    public ControlListener getListener() {
+        return listener;
+    }
+
+    public void setListener(ControlListener listener) {
+        this.listener = listener;
     }
 }
